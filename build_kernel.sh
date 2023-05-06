@@ -5,9 +5,8 @@ export PATH="$HOME/toolchains/prebuilts/clang/host/linux-x86/clang-r450784e/bin/
 # export CROSS_COMPILE=$(pwd)/toolchain/gcc/linux-x86/aarch64/aarch64-linux-android-4.9/bin/aarch64-linux-androidkernel-
 export CROSS_COMPILE=/home/grahame/toolchains/aarch64-linux-android-4.9/bin/aarch64-linux-androidkernel-
 ${CROSS_COMPILE}ld -v
-#export CC=$(pwd)/toolchain/clang/host/linux-x86/clang-r383902/bin/clang
+export CC=$(pwd)/toolchain/clang13-main/bin/clang
 
-export CC=$HOME/home/grahame/toolchains/clang13-main/bin/clang
 
 export CLANG_TRIPLE=aarch64-linux-gnu-
 export ARCH=arm64
