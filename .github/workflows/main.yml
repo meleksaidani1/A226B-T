@@ -1,0 +1,49 @@
+name: Build Kernel
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build-kernel:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout source
+      uses: actions/checkout@v3
+
+    - name: Set up environment
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y gcc-aarch64-linux-gnu
+        sudo apt-get install -y clang
+        export CROSS_COMPILE=aarch64-linux-androidkernel-
+        export CC=$(pwd)/toolchain/clang13-main/bin/clang
+        export CLANG_TRIPLE=aarch64-linux-gnu-
+        export ARCH=arm64
+        export ANDROID_MAJOR_VERSION=t
+        export KCFLAGS=-w
+        export CONFIG_SECTION_MISMATCH_WARN_ONLY=y
+
+    - name: Clean build directory
+      run: |
+        make clean && make mrproper
+
+    - name: Build kernel
+      run: |
+        make -C $(pwd) O=$(pwd)/out KCFLAGS=-w CONFIG_SECTION_MISMATCH_WARN_ONLY=y physwizz_defconfig
+        make -C $(pwd) O=$(pwd)/out KCFLAGS=-w CONFIG_SECTION_MISMATCH_WARN_ONLY=y -j16
+
+    - name: Copy Kernel Image
+      run: |
+        cp out/arch/arm64/boot/Image $(pwd)/arch/arm64/boot/Image
+
+    - name: Upload Kernel Image
+      uses: actions/upload-artifact@v3
+      with:
+        name: Kernel-Image
+        path: $(pwd)/arch/arm64/boot/Image
