@@ -39,7 +39,6 @@ jobs:
         sudo apt install gcc-aarch64-linux-gnu -y
         sudo apt install gcc-arm-linux-gnueabi -y
         sudo apt install binutils make python3 libssl-dev build-essential bc bison flex unzip libssl-dev ca-certificates xz-utils mkbootimg cpio device-tree-compiler git git-lfs -y
-        git clone https://github.com/kdrag0n/proton-clang --depth=1 -b master
         make clean
         make mrproper
 
@@ -50,7 +49,7 @@ jobs:
 
     - name: Build Kernel
       run: |
-        export PATH=$PATH:$(pwd)/proton-clang/bin/
+        export PATH=$PATH:$(pwd)/toolchain/clang13-main/bin/clang
         export CC=clang
         export CLANG_TRIPLE=aarch64-linux-gnu-
         export CROSS_COMPILE=aarch64-linux-gnu-
