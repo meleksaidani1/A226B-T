@@ -70,7 +70,7 @@ jobs:
 
         sudo apt install binutils make python3 libssl-dev build-essential bc  bison flex unzip libssl-dev ca-certificates xz-utils mkbootimg cpio device-tree-compiler git git-lfs -y
 
-        git clone https://github.com/physwizz/clang13
+        git clone https://github.com/kdrag0n/proton-clang --dept=1 -b master
 
         make clean
         make mrproper
